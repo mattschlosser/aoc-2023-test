@@ -96,6 +96,12 @@ function findMinSeedRangeLocation(map, seed, range) {
     let options = ['seed', 'soil', 'fertilizer', 'water', 'light', 'temperature', 'humidity']
     for (let option of options) {
         for (let range of map[option]) {
+            // we don't necessariy want the min
+            // we just want the min from each range
+            // so we need to find the next range
+            // let's break it into the available ranges
+            let availableRanges = {};
+            let currentSeed = seed;
             let offset = seed - range.from;
             if (offset >= 0 && offset < range.range) {
                 seed = range.to + offset;
