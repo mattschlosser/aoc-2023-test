@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-
+import { findMinLocation, mapSeedToLocation } from './helpers.js';
 
 let testF = readFileSync("./test-input");
 let testLines = testF.toString().split("\n");
@@ -66,31 +66,19 @@ function part2(lines) {
     seeds = seeds.split(' ').filter(e => e).map(e => +e);
     for (let i = 0; i < seeds.length; i += 2) {
         console.log(seeds[i], seeds[i+1]);
+        let currentSeed = seeds[i];
+        while (currentSeed < seeds[i]) {
+            // 
+        }
     }
     return Number.NaN;
 }
 
 /** @typedef {{from: number, to: number, range: number}} RangeMap */
 
-/**
- * 
- * @param {{seed: RangeMap[], soil: RangeMap[], fertilizer: RangeMap[], water: RangeMap[], light: RangeMap[], temperature: RangeMap[], humidity: RangeMap[]}} map 
- * @param {number} seed 
- */
-function mapSeedToLocation(map, seed) {
-    let options = ['seed', 'soil', 'fertilizer', 'water', 'light', 'temperature', 'humidity']
-    for (let option of options) {
-        for (let range of map[option]) {
-            let offset = seed - range.from;
-            if (offset >= 0 && offset < range.range) {
-                seed = range.to + offset;
-                // console.log(`seed ${seed} is between ${range.from} and ${range.from + range.range -1}`)
-                break;
-            }
-        }
-    }
-    return seed;
-}
+
+/** @typedef {{seed: RangeMap[], soil: RangeMap[], fertilizer: RangeMap[], water: RangeMap[], light: RangeMap[], temperature: RangeMap[], humidity: RangeMap[]}} Almanac  */
+
 
 function findMinSeedRangeLocation(map, seed, range) {
     let options = ['seed', 'soil', 'fertilizer', 'water', 'light', 'temperature', 'humidity']
